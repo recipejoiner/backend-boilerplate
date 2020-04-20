@@ -33,17 +33,11 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              ENV['SMTP_ADDRESS'],
-    port:                 ENV['SMTP_PORT'].to_i,
-    domain:               ENV['SMTP_DOMAIN'],
-    user_name:            ENV['SMTP_USERNAME'],
-    password:             ENV['SMTP_PASSWORD'],
-    authentication:       ENV['SMTP_AUTH'],
-    enable_starttls_auto: ENV['SMTP_ENABLE_STARTTLS_AUTO'] == "true"
-  }
+  config.action_mailer.delivery_method = :test
 
+  # Use this for developing on localhost
+  host = 'localhost:3000' # Local server, change port number if necessary
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.

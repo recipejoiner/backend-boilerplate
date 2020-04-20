@@ -56,6 +56,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Use this for developing on localhost
+  host = 'localhost:3000' # Local server, change port number if necessary
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+
   # Configuration for using SendGrid in production
   # config.action_mailer.delivery_method = :smtp
   # host = 'https://ari-webtest.herokuapp.com'
