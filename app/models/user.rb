@@ -20,13 +20,10 @@ class User < ApplicationRecord
   # -
 
   # - VALIDATIONS
-  validates :email, presence: true
-  validates :email, length: { maximum: 255 }
-  validates :email, format: { with: Regex::Email::VALIDATE }
-  validates :first_name, presence: true
-  validates :first_name, length: { maximum: 255 }
-  validates :last_name, presence: true
-  validates :last_name, length: { maximum: 255 }
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: Regex::Email::VALIDATE }, uniqueness: { case_sensitive: false } # Rails infirs that uniqueness should be true in addition to case insensitive
+  validates :first_name, presence: true, length: { maximum: 255 }
+  validates :last_name, presence: true, length: { maximum: 255 }
+  validates :username, presence: true, length: { maximum: 255 }, uniqueness: { case_sensitive: false } # Rails infirs that uniqueness should be true in addition to case insensitive
 
   # - CALLBACKS
   after_initialize :setup_new_user, if: :new_record?
