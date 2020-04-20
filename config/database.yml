@@ -19,6 +19,8 @@ test:
   <<: *default
   database: db/rails_devise_graphql_test
 
-# production:
-#   <<: *default
-#   database: db/production.sqlite3
+production:
+  <<: *default
+  database: rails_devise_graphql_production
+  username: postgres
+  password: <%= ENV['DATABASE_PASSWORD'] %>
