@@ -56,10 +56,38 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Configuration for using SendGrid in production
+  # config.action_mailer.delivery_method = :smtp
+  # host = 'https://ari-webtest.herokuapp.com'
+  # config.action_mailer.default_url_options = { host: host }
+  # ActionMailer::Base.smtp_settings = {
+  #   address: 'smtp.sendgrid.net',
+  #   port: '587',
+  #   authentication: :plain,
+  #   user_name: ENV['SENDGRID_USERNAME'],
+  #   password: ENV['SENDGRID_PASSWORD'],
+  #   domain: 'heroku.com',
+  #   enable_starttls_auto: true,
+  # }
+
+  # Configuration for using SES in production
+  # config.action_mailer.delivery_method = :ses # Configured in config/initializers/amazon_ses.rb
+  # host = 'http://rails-sample-production.mnmsgae6r4.us-east-1.elasticbeanstalk.com/'
+  # config.action_mailer.default_url_options = { host: host }
+
+  # This did not work. Use the above
+  # config.action_mailer.smtp_settings = {
+  #   address: "email-smtp.us-east-1.amazonaws.com",
+  #   user_name: ENV["SES_SMTP_USERNAME"], #Your SMTP user
+  #   password: ENV["SES_SMTP_PASSWORD"], #Your SMTP password
+  #   authentication: :login,
+  #   enable_starttls_auto: true
+  # }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
