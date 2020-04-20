@@ -4,5 +4,6 @@ User.create(
   password_confirmation: ENV['ADMIN_PASSWORD'],
   first_name: ENV['ADMIN_FIRST_NAME'],
   last_name: ENV['ADMIN_LAST_NAME'],
+  username: ENV['ADMIN_USERNAME'],
   role: 'admin'
 )
