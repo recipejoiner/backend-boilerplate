@@ -7,6 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       ## General
       t.string   'first_name',     null: false, default: ''
       t.string   'last_name',      null: false, default: ''
+      t.string   'username',       null: false, default: ''
     
       ## Database authenticatable
       t.string :email,              null: false, default: ''
@@ -47,6 +48,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
     end
 
     add_index :users, :email,                unique: true
+    add_index :users, :username,             unique: true
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
     add_index :users, :unlock_token,         unique: true
