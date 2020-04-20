@@ -3,7 +3,6 @@ class Mutations::User::Login < GraphQL::Schema::Mutation
   field :user, Types::UserType, null: true
   field :errors, [String], null: true
 
-  null true
   description "Login for users"
   argument :email, String, required: true
   argument :password, String, required: true
