@@ -24,5 +24,4 @@ class Mutations::User::Login < GraphQL::Schema::Mutation
       end
     end
   end
-
 end
