@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   include Tokenizable
+  include ActiveModel::Validations
+  # Basic usage of strong_password gem.  Defaults to minimum entropy of 18 and no dictionary checking
+  validates :password, password_strength: true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -10,7 +13,7 @@ class User < ApplicationRecord
          :devise,
          :validatable,
          :trackable,
-         :jwt_authenticatable,
+         :jwt_authenticatable,g
          jwt_revocation_strategy: self
 
   # add new roles to the end
