@@ -20,7 +20,7 @@ class User < ApplicationRecord
   # -
 
   # - VALIDATIONS
-  validates :email, presence: true, length: { maximum: 255 }, format: { with: Regex::Email::VALIDATE } # Something(?) is already checking that the email is unique
+  validates :email, presence: true, length: { maximum: 255 } # Validatable is already checking that the email is valid and unique
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
   validates :username, presence: true, length: { maximum: 255 }, uniqueness: { case_sensitive: false } # Rails infirs that uniqueness should be true in addition to case insensitive
