@@ -1,12 +1,19 @@
 class Mutations::User::SignUp < GraphQL::Schema::Mutation
 
-  null true
+  field :user, Types::UserType, null: false
+
   description "Sign up for users"
   argument :attributes, Types::UserInputType, required: true
-  payload_type Types::UserType 
 
   def resolve(attributes:)
-    User.create(attributes.to_kwargs)
+    user = User.create(attributes.to_kwargs)
+    if user.persisted?
+      context[:current_user] = user
+    else
+      user.errors.full_messages.each { |message|
+        context.add_error(GraphQL::ExecutionError.new(message))
+      }
+      nil # return nil
+    end
   end
-
 end
