@@ -13,7 +13,7 @@ class User < ApplicationRecord
          :devise,
          :validatable,
          :trackable,
-         :jwt_authenticatable,g
+         :jwt_authenticatable,
          jwt_revocation_strategy: self
 
   # add new roles to the end
