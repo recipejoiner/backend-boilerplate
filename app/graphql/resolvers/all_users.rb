@@ -4,7 +4,6 @@ class Resolvers::AllUsers < GraphQL::Schema::Resolver
   description 'Returns all users'
 
   def resolve
-    authenticate
     User.all
   end
 
