@@ -2,10 +2,10 @@ FactoryBot.define do
   factory :user do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    username { Faker::Name.username }
+    username { Faker::Internet.username }
     email {  Faker::Internet.email }
-    password { 'password' }
-    password_confirmation { 'password' }
+    password { 'Password1!' }
+    password_confirmation { 'Password1!' }
     
     trait :customer do
       role { :customer }
