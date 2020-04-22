@@ -13,7 +13,7 @@ class Mutations::User::UpdateUser < GraphQL::Schema::Mutation
   def resolve(arguments)
     user = context[:current_user]
     if !user
-      GraphQL::ExecutionError.new("No such user")
+      GraphQL::ExecutionError.new("No such user, or not logged in")
     else
       # If trying to change the password
       if !!arguments[:new_password] or !!arguments[:new_password_confirmation]
