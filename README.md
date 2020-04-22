@@ -71,6 +71,7 @@ Authorization logic is handled first in the GraphQL controller, which ensures th
 Some examples:
 - Unless a user is an admin, the only information that they can see about other users is their username
 - Passwords are required for changing a password
+
 etc.
 
 ### 4. JSON Web Token
@@ -107,5 +108,7 @@ Feel free to join development!
 Based originally on [zauberware's rails-devise-graphql starter](https://github.com/zauberware/rails-devise-graphql)
 
 __Script:__ <https://github.com/recipejoiner/backend-boilerplate>
+
 __Author GitHub:__ [https://github.com/arimendelow/](https://github.com/arimendelow/)
+
 __Author LinkedIn:__ [http://linkedin.com/in/amendelow](http://linkedin.com/in/amendelow)
