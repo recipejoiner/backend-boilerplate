@@ -16,6 +16,7 @@ class Mutations::User::Login < GraphQL::Schema::Mutation
         user.valid_password?(password)
       }
       if is_valid_for_auth
+        context[:current_user] = user
         {
           user: user
         }
