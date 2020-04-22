@@ -1,6 +1,8 @@
 # Rails 6 API-only boilerplate with devise & JWT & graphQL
 
-This is a boilerplate to build your next SaaS product. It's a RubyOnRails 6 API only backend with Authentication and GraphQL API. It works nicely together with clients made with **React.js & React.Native** or any other frontend which implements the [JSON Web Tokens](https://jwt.io/introduction/) philosophy.
+A starter project for any Ruby on Rails GraphQL API, including auth!
+
+It's designed to be a good starting point for any frontend-agnostic API, and implements [JSON Web Tokens](https://jwt.io/introduction/) for authentication.
 
 This boilerplate includes support for two users: normal users, and API users. All requests (other than signing up and logging in) must be authenticated, so the API User model exists so that a frontend can authenticate for non-logged in users.
 
