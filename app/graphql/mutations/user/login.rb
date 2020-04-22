@@ -10,7 +10,7 @@ class Mutations::User::Login < GraphQL::Schema::Mutation
   def resolve(email:, password:)
     user = User.find_for_authentication(email: email)
     if !user
-      GraphQL::ExecutionError.new("No such user")    
+      GraphQL::ExecutionError.new("No such user")
     else
       is_valid_for_auth = user.valid_for_authentication?{
         user.valid_password?(password)
