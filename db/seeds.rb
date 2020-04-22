@@ -7,3 +7,9 @@ User.create(
   username: ENV['ADMIN_USERNAME'],
   role: 'admin'
 )
+
+ApiUser.create(
+  email: ENV['ADMIN_EMAIL'],
+  password: ENV['ADMIN_PASSWORD'],
+  password_confirmation: ENV['ADMIN_PASSWORD'],
+)

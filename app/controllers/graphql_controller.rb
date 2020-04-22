@@ -6,6 +6,7 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       current_user: current_user,
+      current_api_user: current_api_user,
       login: method(:sign_in)
     }
     result = GraphqlSchema.execute(

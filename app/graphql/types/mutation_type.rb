@@ -1,7 +1,7 @@
 module Types
   class MutationType < Types::BaseObject
     
-    # Authentication
+    # User Authentication
     field :login, mutation: Mutations::User::Login
     field :token_login, mutation: Mutations::User::TokenLogin
     field :logout, mutation: Mutations::User::Logout
@@ -12,6 +12,8 @@ module Types
     field :unlock, mutation: Mutations::User::Unlock
     field :resend_unlock_instructions, mutation: Mutations::User::ResendUnlockInstructions
 
+    # API User Authentication
+    field :api_sign_up, mutation: Mutations::ApiUser::ApiSignUp
   end
 end
   
