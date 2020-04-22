@@ -15,6 +15,7 @@ class GraphqlController < ApplicationController
       if is_not_logged_in
         is_whitelisted_query = [
           "login(",
+          "apiLogin(",
           "signUp(",
           "apiSignUp(",
           "query IntrospectionQuery" # query to get the schema

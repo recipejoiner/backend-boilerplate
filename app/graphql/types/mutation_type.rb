@@ -14,6 +14,7 @@ module Types
 
     # API User Authentication
     field :api_sign_up, mutation: Mutations::ApiUser::ApiSignUp
+    field :api_login, mutation: Mutations::ApiUser::ApiLogin
   end
 end
   
