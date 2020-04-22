@@ -1,9 +1,20 @@
 class User < ApplicationRecord
+  include ActiveModel::Dirty # https://api.rubyonrails.org/classes/ActiveModel/Dirty.html
   include Devise::JWT::RevocationStrategies::JTIMatcher
   include Tokenizable
   include ActiveModel::Validations
   # Basic usage of strong_password gem.  Defaults to minimum entropy of 18 and no dictionary checking
-  validates :password, password_strength: true
+  # validates :password, password_strength: true
+  # Another method of password validation:
+  PASSWORD_REQUIREMENTS = /\A
+    (?=.{8,}) # at least 8 chars long
+    (?=.*\d) # at least one number
+    (?=.*[a-z]) # at least one lowercase letter
+    (?=.*[A-Z]) # at least one uppercase letter
+    (?=.*[[:^alnum:]]) # at least one symbol
+  /x
+
+  validates :password, format: PASSWORD_REQUIREMENTS, if: :password_required_for_action
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -41,8 +52,23 @@ class User < ApplicationRecord
     [first_name, last_name].join(' ').strip
   end
 
-  private def setup_new_user
+private
+  
+  def setup_new_user
     self.role ||= :customer
+  end
+
+  def password_required_for_action
+    # Add any changes that you want to require a password for. eg:
+    # self.username_changed? or
+    #   self.id_changed? or
+    #   self.email_changed? or
+    #   self.first_name_changed? or
+    #   self.last_name_changed?
+    if self.encrypted_password_changed?
+      return true
+    end
+    return false
   end
 
 end
