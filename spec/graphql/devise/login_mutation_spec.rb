@@ -46,7 +46,7 @@ RSpec.describe GraphqlSchema do
       }
       
       it 'returns user object' do
-        user_email = graphql!['data']['login']['email']
+        user_email = graphql!['data']['login']['user']['email']
         expect(user_email).to eq(user.email)
       end
     end
