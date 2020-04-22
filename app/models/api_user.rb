@@ -3,7 +3,17 @@ class ApiUser < ApplicationRecord
   include Tokenizable
   include ActiveModel::Validations
   # Basic usage of strong_password gem.  Defaults to minimum entropy of 18 and no dictionary checking
-  validates :password, password_strength: true
+  # validates :password, password_strength: true
+  # Another method of password validation:
+  PASSWORD_REQUIREMENTS = /\A
+    (?=.{8,}) # at least 8 chars long
+    (?=.*\d) # at least one number
+    (?=.*[a-z]) # at least one lowercase letter
+    (?=.*[A-Z]) # at least one uppercase letter
+    (?=.*[[:^alnum:]]) # at least one symbol
+  /x
+
+  validates :password, format: PASSWORD_REQUIREMENTS, if: :password_required_for_action
 
   # Include devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
@@ -31,8 +41,14 @@ class ApiUser < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
-  # return first and lastname
-  def name
-    [first_name, last_name].join(' ').strip
+private
+  def password_required_for_action
+    # Add any changes that you want to require a password for. eg:
+    #   self.id_changed? or
+    #   self.email_changed?
+    if self.encrypted_password_changed?
+      return true
+    end
+    return false
   end
 end
