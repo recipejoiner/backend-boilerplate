@@ -7,8 +7,8 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: true
 
     def authorized_for_full_info
-      if context[:current_user] != nil
-        if context[:current_user].id == self.object.id or context[:current_user].admin?
+      if context[:current_api_user] != nil
+        if context[:current_api_user].id == self.object.id or context[:current_user].admin?
           return true
         end
       end
