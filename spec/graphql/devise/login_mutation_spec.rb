@@ -10,8 +10,13 @@ RSpec.describe GraphqlSchema do
     # set query
     prepare_query("
       mutation login($email: String!, $password: String!){ 
-        login(email: $email, password: $password) { 
-          email 
+        login(email: $email, password: $password) {
+          user {
+            id
+            email
+            username
+            name
+          }
         } 
       }
     ")
@@ -28,7 +33,7 @@ RSpec.describe GraphqlSchema do
         )
       }
       it 'is nil' do
-        expect(graphql!['data']['login']).to eq(nil)
+        expect(graphql!['errors'][0]['message']).to eq("No such user")
       end
     end
 
