@@ -25,7 +25,7 @@ module Tokenizable
   end
 
   private def token_headers
-    { 
+    {
       'Accept' => 'application/json', 
       'Content-Type' => 'application/json' 
     }
