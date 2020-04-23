@@ -12,17 +12,14 @@ RSpec.describe GraphqlSchema do
       mutation login($email: String!, $password: String!){ 
         login(email: $email, password: $password) {
           user {
-            id
             email
-            username
-            name
           }
         } 
       }
     ")
   }
 
-  let(:password) { SecureRandom.uuid }
+  let(:password) { "Test1234!!" }
 
   describe 'login' do
     context 'when no user exists' do
@@ -39,7 +36,9 @@ RSpec.describe GraphqlSchema do
 
     
     context 'when there\'s a matching user' do
-      let(:user) { create(:user, email: Faker::Internet.email, password: password, password_confirmation: password) }
+      let(:user) {
+        create(:user, email: Faker::Internet.email, password: password, password_confirmation: password)
+      }
       
       before { 
         prepare_query_variables(email: user.email, password: password) 
