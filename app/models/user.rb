@@ -26,6 +26,8 @@ class User < ApplicationRecord
   :trackable,
   :jwt_authenticatable,
   jwt_revocation_strategy: self
+
+  devise :omniauthable, omniauth_providers: %i[facebook]
   
   # add new roles to the end
   enum role: %i[customer admin]
