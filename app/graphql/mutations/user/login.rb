@@ -21,7 +21,7 @@ class Mutations::User::Login < GraphQL::Schema::Mutation
           user: user
         }
       else
-        GraphQL::ExecutionError.new("Incorect password")
+        GraphQL::ExecutionError.new("Incorrect password")
       end
     end
   end
