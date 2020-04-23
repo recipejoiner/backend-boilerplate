@@ -7,6 +7,12 @@ class User < ApplicationRecord
   # validates :password, password_strength: true
   # Another method of password validation is in the Regex lib
 
+  # Order the users alphabetically by username
+  # Could also do 'order('username asc')', which is raw SQL
+  # '->' is called a 'stabby lambda'
+  # It takes in a block and returns a Proc, which can then be evaluated with the 'call' method
+  default_scope -> { order(username: :asc) }
+
   # Ensure that all usernames are stored in lowercase
   before_save :downcase_username
 
