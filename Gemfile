@@ -48,12 +48,12 @@ group :development, :test do
   gem 'awesome_print'                       # better console ouput for objects -> ap object.inspect
   gem 'factory_bot_rails'                   # model mocks with factory bot
   gem 'rspec-rails', '~> 3.8'               # used testframework
+  gem 'faker', '~> 2.11.0'
 end
 
 
 group :test do
   gem 'database_cleaner', '~> 1.6'
-  gem 'faker', '~> 1.8'
   gem 'shoulda-matchers', '4.0.0.rc1'
   gem 'rails-controller-testing' 
   gem 'simplecov', require: false

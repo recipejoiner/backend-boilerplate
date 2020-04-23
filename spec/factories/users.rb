@@ -2,10 +2,10 @@ FactoryBot.define do
   factory :user do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    username { Faker::Name.username }
+    username { Faker::Internet.username(specifier: 2, separators: %w()) } #minimum 2 letters and only letters
     email {  Faker::Internet.email }
-    password { 'password' }
-    password_confirmation { 'password' }
+    password { 'Test1234!!' }
+    password_confirmation { 'Test1234!!' }
     
     trait :customer do
       role { :customer }

@@ -18,6 +18,8 @@ RSpec.describe User, type: :model do
   it { should validate_length_of(:email).is_at_most(255) }
   it { is_expected.to allow_value('email@address.foo').for(:email) }
   it { is_expected.to allow_value('firstlast').for(:username) }
+  it { is_expected.to_not allow_value('first.last').for(:username) }
+  it { is_expected.to_not allow_value('firstlast1').for(:username) }
   it { is_expected.to_not allow_value('email').for(:email) }
   it { is_expected.to_not allow_value('email@domain').for(:email) }
   it { is_expected.to_not allow_value('email@domain.').for(:email) }

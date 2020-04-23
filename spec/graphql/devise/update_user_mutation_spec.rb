@@ -9,15 +9,17 @@ RSpec.describe GraphqlSchema do
 
     # set query
     prepare_query('
-      mutation updateUser($password: String, $passwordConfirmation: String){ 
-        updateUser(password: $password, passwordConfirmation: $passwordConfirmation) { 
-          email
-        } 
+      mutation updateUser($password: String, $newPassword: String, $newPasswordConfirmation: String){
+        updateUser(password: $password, newPassword: $newPassword, newPasswordConfirmation: $newPasswordConfirmation) { 
+          user { 
+            email
+          }
+        }
       }
     ')
   }
 
-  let (:password) { SecureRandom.uuid }
+  let (:password) { "Test1234!!" }
 
   describe 'update' do
     
@@ -25,11 +27,12 @@ RSpec.describe GraphqlSchema do
       before{
         prepare_query_variables(
           password: password, 
-          password_confirmation: password
+          new_password: password + "1",
+          new_password_confirmation: password + "1"
         )
       }
       it 'is nil' do
-        expect(graphql!['data']['updateUser']).to eq(nil)
+        expect(graphql!['errors'][0]['message']).to eq("No such user, or not logged in")
       end
     end
 
@@ -45,7 +48,7 @@ RSpec.describe GraphqlSchema do
         prepare_context({ current_user: @current_user }) 
       }
 
-      let(:user) { 
+      let(:user) {
         @current_user 
       }
 
@@ -53,12 +56,13 @@ RSpec.describe GraphqlSchema do
         before { 
           prepare_query_variables(
             password: password, 
-            passwordConfirmation: password
-          ) 
+            newPassword: password + "1",
+            newPasswordConfirmation: password + "1"
+          )
         }
         
         it 'returns user object' do
-          user_email = graphql!['data']['updateUser']['email']
+          user_email = graphql!['data']['updateUser']['user']['email']
           expect(user_email).to eq(user.email)
         end
       end
@@ -68,8 +72,9 @@ RSpec.describe GraphqlSchema do
         before {
           prepare_query_variables(
             password: password, 
-            passwordConfirmation: password+'1'
-          ) 
+            newPassword: password,
+            newPasswordConfirmation: password + "1"
+          )
         }
         
         it 'returns error' do

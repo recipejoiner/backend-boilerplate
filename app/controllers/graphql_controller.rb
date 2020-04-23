@@ -18,6 +18,8 @@ class GraphqlController < ApplicationController
           "apiLogin(",
           "signUp(",
           "apiSignUp(",
+          "sendResetPasswordInstructions(",
+          "resetPassword(",
           "query IntrospectionQuery" # query to get the schema
         ].any? { |queryFragment| query.include?(queryFragment)}
         if is_whitelisted_query
