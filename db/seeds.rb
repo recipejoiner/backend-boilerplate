@@ -22,3 +22,20 @@ ApiUser.create(
   password_confirmation: ENV['ADMIN_PASSWORD'],
 )
 
+# Create 999 random example users
+999.times do |n|
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
+  username = Faker::Internet.username(specifier: first_name + " " + last_name, separators: %w())
+  email = Faker::Internet.email(name: first_name + " " + last_name)
+  password = "Demo1234!!"
+  User.create!(
+    email: email,
+    password: password,
+    password_confirmation: password,
+    first_name: first_name,
+    last_name: last_name,
+    username: username,
+    role: 'customer'
+  )
+end
