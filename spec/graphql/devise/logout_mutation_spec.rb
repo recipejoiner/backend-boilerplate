@@ -15,7 +15,7 @@ RSpec.describe GraphqlSchema do
     ")
   }
 
-  let(:password){ SecureRandom.uuid }
+  let(:password){ "Test1234!!" }
 
   describe 'logout' do
     context 'when no user exists' do
