@@ -5,39 +5,34 @@ class User < ApplicationRecord
   include ActiveModel::Validations
   # Basic usage of strong_password gem.  Defaults to minimum entropy of 18 and no dictionary checking
   # validates :password, password_strength: true
-  # Another method of password validation:
-  PASSWORD_REQUIREMENTS = /\A
-    (?=.{8,}) # at least 8 chars long
-    (?=.*\d) # at least one number
-    (?=.*[a-z]) # at least one lowercase letter
-    (?=.*[A-Z]) # at least one uppercase letter
-    (?=.*[[:^alnum:]]) # at least one symbol
-  /x
+  # Another method of password validation is in the Regex lib
 
-  validates :password, format: PASSWORD_REQUIREMENTS, if: :password_required_for_action
+  # Ensure that all usernames are stored in lowercase
+  before_save :downcase_username
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
-         :registerable,
-         :recoverable, 
-         :devise,
-         :validatable,
-         :trackable,
-         :jwt_authenticatable,
-         jwt_revocation_strategy: self
-
+  :registerable,
+  :recoverable, 
+  :devise,
+  :validatable,
+  :trackable,
+  :jwt_authenticatable,
+  jwt_revocation_strategy: self
+  
   # add new roles to the end
   enum role: %i[customer admin]
-
+  
   # - RELATIONS
   # -
-
+  
   # - VALIDATIONS
+  validates :password, format: Regex::Password::PASSWORD_REQUIREMENTS, if: :password_required_for_action
   validates :email, presence: true, length: { maximum: 255 } # Validatable is already checking that the email is valid and unique
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
-  validates :username, presence: true, length: { maximum: 255 }, uniqueness: { case_sensitive: false } # Rails infirs that uniqueness should be true in addition to case insensitive
+  validates :username, presence: true, format: Regex::Username::USERNAME_REQUIREMENTS, length: { maximum: 255 }, uniqueness: { case_sensitive: false } # Rails infirs that uniqueness should be true in addition to case insensitive
 
   # - CALLBACKS
   after_initialize :setup_new_user, if: :new_record?
@@ -69,6 +64,11 @@ private
       return true
     end
     return false
+  end
+
+  # Converts username to lowercase
+  def downcase_username
+    self.username = username.downcase
   end
 
 end

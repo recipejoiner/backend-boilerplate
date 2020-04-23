@@ -4,16 +4,7 @@ class ApiUser < ApplicationRecord
   include ActiveModel::Validations
   # Basic usage of strong_password gem.  Defaults to minimum entropy of 18 and no dictionary checking
   # validates :password, password_strength: true
-  # Another method of password validation:
-  PASSWORD_REQUIREMENTS = /\A
-    (?=.{8,}) # at least 8 chars long
-    (?=.*\d) # at least one number
-    (?=.*[a-z]) # at least one lowercase letter
-    (?=.*[A-Z]) # at least one uppercase letter
-    (?=.*[[:^alnum:]]) # at least one symbol
-  /x
-
-  validates :password, format: PASSWORD_REQUIREMENTS, if: :password_required_for_action
+  # Another method of password validation is in the Regex lib
 
   # Include devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
@@ -31,6 +22,7 @@ class ApiUser < ApplicationRecord
   # -
 
   # - VALIDATIONS
+  validates :password, format: Regex::Password::PASSWORD_REQUIREMENTS, if: :password_required_for_action
   validates :email, presence: true, length: { maximum: 255 } # Validatable is already checking that the email is valid and unique
 
   # - CALLBACKS
