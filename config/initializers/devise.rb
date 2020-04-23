@@ -175,7 +175,7 @@ Devise.setup do |config|
   config.password_length = 6..128
 
   # Email regex used to validate email formats.
-  config.email_regexp = /\A(\w+)([\w+\-.]+)(\w+)(@)([a-z\d]+)([a-z\d\-\.]+)([a-z\d]+)(\.)([a-z]+)\z/i
+  config.email_regexp = /\A(\w+)([\w+\-.]+)(\w+)(@)([a-z\d]+)([a-z\d\-\.]+)([a-z\d]+)(\.)([a-z]{2,})\z/i
   # Explaining that email regex:
   # /             start of regex
   # \A            match start of string
@@ -187,7 +187,7 @@ Devise.setup do |config|
   # [a-z\d\-.]+   at least one letter, digit, hyphen, or dot
   # [a-z\d]+      at least one letter or digit
   # \.            exactly one literal dot
-  # [a-z]+        at least one letter
+  # [a-z]{2,}     at least two letters
   # \z            match end of string
   # /             end of regex
   # i             case insensitive
