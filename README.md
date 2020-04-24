@@ -51,7 +51,7 @@ rake db:seed
 
 Set up the development server:
 
-Currently, the server is configured to use a custom localhost URL along with a self-signed SSL cert in dev, partially for OmniAuth testing. You can see how to configure this to work for you by looking in `/config/environments/development.rb` and `config/puma.rb`, or just comment out all of those configurations.
+Currently, the server is configured to use a custom localhost URL along with a self-signed SSL cert in dev, partially for OmniAuth testing. You can see how to configure this to work for you by looking in `/config/environments/development.rb` and `config/puma.rb`, or just comment out all of those configurations. Also, note that once this is configured, trying to go to `localhost:3000` or any variation on that will not work. You must use port `3001` (or whatever port you've configured for SSL in `puma.rb`)
 
 __The server won't run until you've done this.__
 
@@ -63,7 +63,7 @@ rails s
 
 Because this is an API-only application you will not be able to access any routes via browser (other than the OmniAuth route). Download a GraphQL client like [Insomnia](https://insomnia.rest/) or others. 
 
-Point the GraphQL IDE to `http://localhost:3000/graphql/`
+Point the GraphQL IDE to `http://localhost:3000/graphql/` (or `https://<your-dev-url>:3001/graphql/`, if you've configured that)
 
 ## Using OmniAuth
 
