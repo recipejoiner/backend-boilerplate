@@ -9,6 +9,9 @@ Devise.setup do |config|
     jwt.expiration_time = 42.day.to_i
   end
 
+  # Omniauth config
+  config.omniauth :facebook, ENV['FB_APP_ID'], ENV['FB_APP_SECRET'], scope: 'email', info_fields: 'email,name'
+
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.

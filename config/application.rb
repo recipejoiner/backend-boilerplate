@@ -25,6 +25,10 @@ module RailsDeviseGraphql
     config.autoload_paths << Rails.root.join("lib")
     config.eager_load_paths << Rails.root.join("lib")
 
+    # Add cookie session store back to rails api app
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
     # config.autoload_paths += Dir[Rails.root.join('app', 'graphql')]
 
     # Settings in config/environments/* take precedence over those specified here.

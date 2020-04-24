@@ -1,6 +1,6 @@
-# Rails 6 API-only boilerplate with devise & JWT & graphQL
+# Rails 6 API-only boilerplate with devise & JWT & graphQL. Including implementation of OmniAuth!
 
-A starter project for any Ruby on Rails GraphQL API, including auth!
+A starter project for any Ruby on Rails GraphQL API, including both custom auth and OmniAuth!
 
 It's designed to be a good starting point for any frontend-agnostic API, and implements [JSON Web Tokens](https://jwt.io/introduction/) for authentication.
 
@@ -10,6 +10,8 @@ Once the user is logged in, it is expected that the user's token will be passed 
 
 Tokens should be in the header of your request, and formatted like so, per the JWT specs:
 `Authorization: Bearer <token>`
+
+OAuth has been implemented for Facebook logins via the [OmniAuth Facebook](https://github.com/simi/omniauth-facebook) gem. See below for instructions on using the current implementation.
 
 ## Versions
 
@@ -57,13 +59,27 @@ Because this is an API-only application you will not be able to access any route
 
 Point the GraphQL IDE to `http://localhost:3000/graphql/`
 
+## Using OmniAuth
+[Devise `:omniauthable`](https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview) been implemented for the User model, and must be configured before use. The only configuration that needs to be done is:
+- Register for a FB dev account, as it says here: <https://developers.facebook.com/docs/facebook-login/web>
+- Create a new app. Name it whatever you like. You can do this [here](https://developers.facebook.com/apps/).
+- In your app, go to basic settings. Add `localhost` to your app domain if you'll be testing locally, as well as any other domain that your app lives on. 
+- On the above settings page, you have your App ID as well as your App Secret (click 'show'). Copy these into their rightful place in your .env file, via the env_sample from earlier.
+
+### User flow
+- User visits the following url: `http://localhost:3000/users/auth/facebook/` (in production, replace localhost with your API's URL)
+- User logs in
+- Implemented in the callback located in `app/controller/users/omniauth_callbacks_controller.rb`, the user is then authenticated either by the UID and provider information included in the response from Facebook. If these aren't set on a matching user, the script will attempt to authenticate via their email. If that doesn't exist on a user either, a new user will be created for them, using their name on Facebook for their username, first_name, and last_name, and it'll store their email as well.
+
+Note: If a user signs up via OAuth, they can still update their name/username/email. You may want to prompt users to update this information, especially because their username will have a random string of letters at the end of it to ensure uniqueness.
+
 ## What's included?
 
 ### 1. Database
 The app uses a postgresql database. It implements the connector with the gem `pg`. The app already includes `User` and `API User` models with basic setup.
 
 ### 2. Authentication
-The app uses [devise](https://github.com/plataformatec/devise)'s logic for authentication. Emails are not totally configured.
+The app uses [devise](https://github.com/plataformatec/devise)'s logic for authentication. Emails are not totally configured. OmniAuth is also configured for the `User` model.
 
 ### 3. Authorization
 Authorization logic is handled first in the GraphQL controller, which ensures that users are logged in before executing queries. Note that this is done with regex, and is therefore not totally secure. But that's okay, because authorization is also handled (mostly) within the GraphQL logic!
@@ -98,7 +114,6 @@ The project runs on any host with ruby installed. Its only dependency is a Postg
 
 * Specs for devise lockable
 * Implementation for devise confirmable
-* Implementation for omniauthable
 
 
 Feel free to join development!

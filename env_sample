@@ -5,3 +5,5 @@ ADMIN_FIRST_NAME=Ari
 ADMIN_LAST_NAME=Mendelow
 ADMIN_USERNAME=ari
 DATABASE_PASSWORD=put db password here
+FB_APP_ID=if using OAuth, put your FB App ID here
+FB_APP_SECRET=if using OAuth, put your FB App secret here

@@ -26,6 +26,8 @@ class User < ApplicationRecord
   :trackable,
   :jwt_authenticatable,
   jwt_revocation_strategy: self
+
+  devise :omniauthable, omniauth_providers: %i[facebook]
   
   # add new roles to the end
   enum role: %i[customer admin]
@@ -51,6 +53,16 @@ class User < ApplicationRecord
   # return first and lastname
   def name
     [first_name, last_name].join(' ').strip
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).or(where(email: auth.info.email)).first_or_create! do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20] # set random password
+      user.first_name = auth.info.name.split[0] || ""
+      user.last_name = auth.info.name.split[1] || ""
+      user.username = (auth.info.name + SecureRandom.alphanumeric).downcase.gsub(/[^a-z]/i, '')
+    end
   end
 
 private
