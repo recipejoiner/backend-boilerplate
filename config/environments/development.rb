@@ -56,4 +56,25 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # If you have a custom domain in /etc/hosts, put it here
+  config.hosts << "api.devwork.shmob"
+
+  # Must use a self-signed cert for this to not make browsers mad - 
+  config.force_ssl = true
+  # do the following:
+  # 1. Resolve a domain name to localhost in /etc/hosts (and put that domain name above)
+  # 2. Install https://github.com/FiloSottile/mkcert
+  # 3. Run the following Terminal, replacing 'devwork.shmob' with whatever domain name you've used in the previous step
+'''
+mkcert devwork.shmob "*.devwork.shmob" localhost 127.0.0.1 ::1
+'''
+# You may need to edit the certs output to remove a '+', which seems to make Rails mad
+# Then, run (again, replacing the cert files with your own):
+'''
+mkdir -p config/ssl
+mv devwork.shmob4.pem devwork.shmob4-key.pem config/ssl
+'''
+# Lastly, configure Puma to specify this ssl binding by adding the following to config/puma.rb
+
 end

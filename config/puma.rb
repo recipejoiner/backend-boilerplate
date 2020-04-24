@@ -36,3 +36,17 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# Configure rails on development
+if Rails.env.development?
+# Bind localhost to SSL, if using that (see the bottom of config/environments/development.rb)
+# rails s -b 'ssl://127.0.0.1:3001?key=config/ssl/api.devwork.shmob.key&cert=config/ssl/api.devwork.shmob.crt'
+# If this thorws an 'address already in use' error, you can run the following to see what's using that port on localhost:
+# lsof -wni tcp:3001
+# Note that because the non-ssl port is 3000, this port is 3001
+ssl_bind '127.0.0.1', '3001', {
+  key: "config/ssl/devwork.shmob4-key.pem",
+  cert: "config/ssl/devwork.shmob4.pem",
+  verify_mode: 'none'
+}
+end

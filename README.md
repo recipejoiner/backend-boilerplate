@@ -49,25 +49,37 @@ rake db:migrate
 rake db:seed
 ```
 
-Run the development server:
+Set up the development server:
+
+Currently, the server is configured to use a custom localhost URL along with a self-signed SSL cert in dev, partially for OmniAuth testing. You can see how to configure this to work for you by looking in `/config/environments/development.rb` and `config/puma.rb`, or just comment out all of those configurations.
+
+__The server won't run until you've done this.__
+
+Then, run the development server:
 
 ```
 rails s
 ```
 
-Because this is an API-only application you will not be able to access any routes via browser. Download a GraphQL client like [Insomnia](https://insomnia.rest/) or others. 
+Because this is an API-only application you will not be able to access any routes via browser (other than the OmniAuth route). Download a GraphQL client like [Insomnia](https://insomnia.rest/) or others. 
 
 Point the GraphQL IDE to `http://localhost:3000/graphql/`
 
 ## Using OmniAuth
+
+__SSL and the custom localhost URL from above must be set up correctly for this to work.__
+
 [Devise `:omniauthable`](https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview) been implemented for the User model, and must be configured before use. The only configuration that needs to be done is:
 - Register for a FB dev account, as it says here: <https://developers.facebook.com/docs/facebook-login/web>
 - Create a new app. Name it whatever you like. You can do this [here](https://developers.facebook.com/apps/).
-- In your app, go to basic settings. Add `localhost` to your app domain if you'll be testing locally, as well as any other domain that your app lives on. 
+- In your app, go to basic settings. Add `localhost` and your custom dev URL to your app domain if you'll be testing locally, as well as any other domain that your app lives on.
 - On the above settings page, you have your App ID as well as your App Secret (click 'show'). Copy these into their rightful place in your .env file, via the env_sample from earlier.
+- Then, go to Products > Facebook Login > Settings. Under 'Valid OAuth Redirect URIs', put `https://<your-dev-url>:3001/users/auth/facebook/callback`.
+
+
 
 ### User flow
-- User visits the following url: `http://localhost:3000/users/auth/facebook/` (in production, replace localhost with your API's URL)
+- User visits the following url: `https://<your-dev-url>:3001/users/auth/facebook/` (in production, replace localhost with your API's URL)
 - User logs in
 - Implemented in the callback located in `app/controller/users/omniauth_callbacks_controller.rb`, the user is then authenticated either by the UID and provider information included in the response from Facebook. If these aren't set on a matching user, the script will attempt to authenticate via their email. If that doesn't exist on a user either, a new user will be created for them, using their name on Facebook for their username, first_name, and last_name, and it'll store their email as well.
 
