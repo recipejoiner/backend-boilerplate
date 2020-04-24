@@ -53,6 +53,8 @@ Set up the development server:
 
 Currently, the server is configured to use a custom localhost URL along with a self-signed SSL cert in dev, partially for OmniAuth testing. You can see how to configure this to work for you by looking in `/config/environments/development.rb` and `config/puma.rb`, or just comment out all of those configurations. Also, note that once this is configured, trying to go to `localhost:3000` or any variation on that will not work. You must use port `3001` (or whatever port you've configured for SSL in `puma.rb`)
 
+Also, if you wish to use the small node server that's included for testing subdomain redirects, point `mini-node-server/server.js` to the same cert files that you're using for your rails app. That server can be started by running `node server.js`.
+
 __The server won't run until you've done this.__
 
 Then, run the development server:
@@ -82,6 +84,7 @@ __SSL and the custom localhost URL from above must be set up correctly for this 
 - User visits the following url: `https://<your-dev-url>:3001/users/auth/facebook/` (in production, replace localhost with your API's URL)
 - User logs in
 - Implemented in the callback located in `app/controller/users/omniauth_callbacks_controller.rb`, the user is then authenticated either by the UID and provider information included in the response from Facebook. If these aren't set on a matching user, the script will attempt to authenticate via their email. If that doesn't exist on a user either, a new user will be created for them, using their name on Facebook for their username, first_name, and last_name, and it'll store their email as well.
+- The user is then forwarded back to the website, and a token is set. There is a small node server set up for testing this.
 
 Note: If a user signs up via OAuth, they can still update their name/username/email. You may want to prompt users to update this information, especially because their username will have a random string of letters at the end of it to ensure uniqueness.
 
