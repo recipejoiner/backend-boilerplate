@@ -10,7 +10,7 @@ gem 'rails', '~> 6.0.2'
 gem 'pg'
 
 gem 'devise'                                # Use devise as authentication module
-gem 'devise-jwt', '~> 0.5.8'                # Use JWT token authentication with devise
+gem 'devise-jwt', '~> 0.6.0'                # Use JWT token authentication with devise
 gem 'omniauth-facebook'                     # Use Facebook for OAuth
 gem 'bcrypt', '~> 3.1.7'                    # Use ActiveModel has_secure_password
 gem 'strong_password', '~> 0.0.8'           # Require strong passwords
@@ -20,7 +20,7 @@ gem 'rack-cors'
 # gem 'graphiql-rails', group: :development
 
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 4.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
