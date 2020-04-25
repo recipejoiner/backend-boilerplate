@@ -16,7 +16,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         domain: :all
       }
       if Rails.env.development?
-        redirect_to "https://devwork.shmob:8000/"
+        redirect_to "https://devwork.shmob:8000/#"
       end
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]
