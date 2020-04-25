@@ -10,7 +10,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       session["devise.facebook_data"] = request.env["omniauth.auth"]
-      cookies[:token] = {
+      cookies[:usertoken] = {
         value: @user.token,
         expires: 1.year,
         domain: :all
