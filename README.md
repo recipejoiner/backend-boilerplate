@@ -44,9 +44,9 @@ bundle install
 Make sure postgres is running on localhost. You may have to change your credentials under `/config/database.yml`. You might also want to change the name of your database; you can do that in that same file.
 
 ```sh
-rake db:create
-rake db:migrate
-rake db:seed
+rails db:create
+rails db:migrate
+rails db:seed
 ```
 
 Set up the development server:
